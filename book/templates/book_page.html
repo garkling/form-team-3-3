@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ book.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <br>
+            <h4>{{ book.name }}</h4>
+            <div class="col s8 m8 l8">
+                <img class="img-fluid"
+                     src="https://media.istockphoto.com/photos/blank-book-cover-isolated-on-white-picture-id478720334?k=6&m=478720334&s=612x612&w=0&h=TTN16jGbgtRC4xpW_F3eWHFdZjqQul_gKm5pcPFcabw="
+                     alt="Sample">
+            </div>
+            <div class="col s4 m4 l4">
+                <div class="text bottom-offset">
+                    <table class="responsive-table">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td>{{ book.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ book.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Count</th>
+                            <td>{{ book.count }}</td>
+                        </tr>
+                        <tr>
+                            <th>Author(s)</th>
+                            <td>
+                                {% for author in book.authors.all %}
+                                    <a href="{% url 'author-page' author.uuid %}">
+                                    {{ author.name }} {{ author.patronymic }} {{ author.surname }}
+                                    </a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    {% if request.user.is_authenticated %}
+                    {% if is_ordered %}
+                        <form action="{% url 'end_order' is_ordered.uuid %}">
+                        {% csrf_token %}
+                            <a id='return-book-btn'
+                               class="btn btn-red btn-block"
+                               onclick="this.closest('form').submit()">Return book</a>
+                        </form>
+                        <h5 id="timer" data-date='{{ order_end }}' class="center-align red-text"></h5>
+                    {% else %}
+                        {% if book.count %}
+                            <a id='order-button' class="btn btn-block">Order</a>
+                        {% else %}
+                            <a class="btn btn-block" disabled="">Book is not in stock</a>
+                        {% endif %}
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div id="select-period" hidden>
+                            <div class="input-field">
+                                {{ form.select }}
+                                <a id='submit-order-btn'
+                                   class="btn btn-block"
+                                   onclick="this.closest('form').submit()">Submit</a>
+                            </div>
+                        </div>
+                    </form>
+                        {% else %}
+                        <h6 class="center">
+                            <a href="{% url 'sign-in' %}">Register</a> or
+                            <a href="{% url 'log-in' %}">login</a> to order.
+                        </h6>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

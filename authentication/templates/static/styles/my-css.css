@@ -1,0 +1,138 @@
+html {
+    font-family: Montserrat, sans-serif;
+}
+
+.brand-logo {
+    left: 1rem !important;
+}
+
+.custom-card-content {
+    box-sizing: inherit;
+    display: block;
+    padding: 24px 24px 0 24px;
+    border-radius: 0 0 2px 2px;
+}
+
+.custom-card-content p {
+    margin-bottom: 1px;
+    margin-top: 1px;
+}
+
+.card-title {
+    transition: 1s;
+}
+
+.card-title:hover {
+    transform: scale(1.2);
+}
+
+.card-title-span {
+    background: #ffffff;
+    font-size: 20px;
+    color: #000000;
+    padding: 2px;
+
+}
+
+.card-img-zoom {
+    transition: 1s;
+}
+
+.card-img-zoom:hover {
+    transform: scale(1.2);
+}
+
+.column {
+    float: left;
+    width: 20%;
+    padding: 5px;
+}
+
+.in-card-image {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+}
+
+.in-card-image:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.divider {
+    transition: 0.3s linear;
+}
+
+.divider:hover {
+    background-color: #64b5f6;
+}
+
+.scrollbar {
+    overflow-x: scroll;
+}
+
+.dynamic-btn {
+    transition: 1s;
+}
+
+.dynamic-btn:hover {
+    color: black !important;
+}
+
+.row {
+    column-width: 550px;
+    column-count: 2;
+}
+
+.bottom-offset {
+    padding-top: 100px!important;
+}
+
+.btn-red {
+    color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    background-color: transparent !important;
+}
+
+
+.timepicker {
+    font-size: 30px!important;
+    top: 20% !important;
+    font-weight: 200!important;
+    margin: 0 30px 0 30px!important;
+}
+
+
+.dropdwn {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-cont {
+    display: none;
+    position: absolute;
+    background-color: #c5cae9;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdwn:hover .dropdown-cont {
+    display: block;
+}
+
+.img-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.full-image {
+    width: 100%;
+}

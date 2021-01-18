@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    All books
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        <h3 class="center-align">Books</h3>
+        <div class="divider"></div>
+        <br>
+        <div class="row">
+            {% for book in books %}
+                <div class="col m4 h-100">
+                  <div class="card">
+                    <div class="card-image">
+                      <img src="https://media.istockphoto.com/photos/blank-book-cover-isolated-on-white-picture-id478720334?k=6&m=478720334&s=612x612&w=0&h=TTN16jGbgtRC4xpW_F3eWHFdZjqQul_gKm5pcPFcabw=" alt="Book image">
+                      <a class='card-title' href="{% url 'book-page' book.uuid %}">
+                          <span class="card-title-span">{{ book.name }}</span>
+                      </a>
+                    </div>
+                    <div class="card-content">
+                        {% for author in book.authors.all %}
+                          <h6><strong>{{ author.name }} {{ author.surname }}</strong></h6>
+                        {% endfor %}
+                      <p>{{ book.description }}</p>
+                    </div>
+                    <div class="card-action">
+                      <a href="{% url 'book-page' book.uuid %}" class='blue-text darken-2 'type="button">More</a>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

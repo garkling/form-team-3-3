@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Sign in
+{% endblock %}
+
+{% block content %}
+        <form method="post">
+            {% csrf_token %}
+            {% if registered %}
+                <div class="container">
+                    <br><h5>We have sent you instructions how to confirm your email. (Just <a href="{% url 'activation' %}">click</a> here)</h5>
+                </div>
+            {% else %}
+            <div class="row container bottom-offset">
+                <div id='register-fields' class="row">
+                    <div class="input-field col s2 offset-s3">
+                        {{ form.first_name}}
+                        <label for="first_name">First name</label>
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form.middle_name}}
+                        <label for="middle_name">Middle name</label>
+                    </div>
+                    <div class="input-field col s2">
+                        {{ form.last_name}}
+                        <label for="last_name">Last name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6 offset-s3">
+                        {{ form.email }}
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s6 offset-s3">
+                        {{ form.password }}
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 center">
+                        <button id="register-btn" type="submit" class="btn btn-large">Register</button>
+                        <a href="{% url 'log-in' %}" id='login-btn' type="button" class="btn btn-large btn-flat">Login</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% if failed %}
+            <script>
+                M.toast(
+                  {
+                    html: 'You enter incorrect data. Try again',
+                  }
+                )
+            </script>
+        {% endif %}
+    {% endif %}
+{% endblock %}

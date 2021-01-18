@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    All orders
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        <h3 class="center-align">Orders</h3>
+        <div class="divider"></div>
+        <h4>Open orders</h4>
+        <table>
+            <tr>
+                <th>№</th>
+                <th>Book</th>
+                <th>Order start</th>
+                <th>Order end</th>
+            </tr>
+            {% if not open_orders %}
+                <td><h6>There is no orders yet</h6></td>
+            {% else %}
+            {% for order in open_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td><a href="{% url 'book-page' order.book.uuid %}">{{ order.book.name }}</a></td>
+                    <td>{{ order.created_at }}</td>
+                    <td>{{ order.plated_end_at }}</td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+        </table>
+        <h4>Closed orders</h4>
+        <table>
+            <tr>
+                <th>№</th>
+                <th>Book</th>
+                <th>Order start</th>
+                <th>Order closed</th>
+            </tr>
+            {% if not closed_orders %}
+                <td><h6>There is no orders yet</h6></td>
+            {% else %}
+            {% for order in closed_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td><a href="{% url 'book-page' order.book.uuid %}">{{ order.book.name }}</a></td>
+                    <td>{{ order.created_at }}</td>
+                    <td>{{ order.end_at }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </table>
+    </div>
+{% endblock %}
