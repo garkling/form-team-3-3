@@ -55,15 +55,15 @@ class Book(models.Model):
             # LOGGER.error("User does not exist")
 
     @staticmethod
-    def delete_by_id(book_id):
+    def delete_by_id(book_uuid):
         """
-        :param book_id: an id of a book to be deleted
-        :type book_id: int
+        :param book_uuid: an id of a book to be deleted
+        :type book_uuid: int
         :return: True if object existed in the db and was removed or False if it didn't exist
         """
 
         try:
-            book = Book.objects.get(id=book_id)
+            book = Book.objects.get(uuid=book_uuid)
             book.delete()
             return True
         except Book.DoesNotExist:

@@ -5,12 +5,14 @@ import datetime
 from .models import Book
 from order.models import Order
 from order.forms import FilterForm
+from .forms import BookCreationForm
+from authentication.views import check_superuser
 
 
-def all_books(request):
+def book_catalog(request):
     books = Book.get_all()
     context = {'books': books}
-    return render(request, 'all_books.html', context)
+    return render(request, 'book_catalog.html', context)
 
 
 def book_page(request, book_id):
@@ -40,3 +42,34 @@ def book_page(request, book_id):
         'order_end': order_end.timestamp() * 1000
     }
     return render(request, 'book_page.html', context)
+
+
+# admin side
+def book_list(request):
+    if not check_superuser(request):
+        return redirect('main')
+
+    context = {'books': Book.get_all()}
+    return render(request, 'crud/book_list.html', context)
+
+
+def book_form(request, book_uuid=0):
+    if not check_superuser(request):
+        return redirect('main')
+
+    book = Book.get_by_id(book_uuid)
+    if request.method == 'POST':
+        form = BookCreationForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-book-list')
+    else:
+        form = BookCreationForm(instance=book)
+
+    context = {'form': form}
+    return render(request, 'crud/book_form.html', context)
+
+
+def delete_book(request, book_uuid):
+    Book.delete_by_id(book_uuid)
+    return redirect('admin-book-list')
