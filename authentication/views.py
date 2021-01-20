@@ -39,11 +39,8 @@ def log_in(request):
             password = form.cleaned_data.get('password')
             candidate = authenticate(email=email, password=password)
             if candidate:
-                if not candidate.is_active:
-                    form.errors['is_active'] = 'Account is disabled'
-                else:
-                    login(request, candidate)
-                    return redirect('main')
+                login(request, candidate)
+                return redirect('main')
     else:
         form = UserLoginForm()
 
@@ -68,14 +65,9 @@ def change_status(request):
 
 # admin side
 def check_superuser(request):
+    if request.user.is_anonymous:
+        return False
     return request.user.role
-
-
-def crud(request):
-    if not check_superuser(request):
-        return redirect('main')
-
-    return render(request, 'crud/crud.html')
 
 
 # user CRUD
@@ -83,7 +75,11 @@ def user_list(request):
     if not check_superuser(request):
         return redirect('main')
 
-    context = {'users': CustomUser.get_all()}
+    users = CustomUser.get_all()
+    user_groups = [['Admins', users.filter(role=True)],
+                   ['Users', users.filter(role=False, is_active=True)],
+                   ['Not activated', users.filter(is_active=False)]]
+    context = {'user_groups': user_groups}
     return render(request, 'crud/user_list.html', context)
 
 

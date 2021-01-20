@@ -7,6 +7,7 @@ from book.models import Book
 from authentication.views import check_superuser
 
 
+
 def all_orders(request, user_uuid):
     current_user = request.user
     open_orders = Order.get_not_returned_books_for_user(current_user.id)
@@ -33,7 +34,11 @@ def order_list(request):
     if not check_superuser(request):
         return redirect('main')
 
-    context = {'orders': Order.get_all()}
+    orders = Order.get_all()
+    order_groups = [['Open orders', orders.filter(end_at__isnull=True)],
+                    ['Closed orders', orders.filter(end_at__isnull=False)]]
+
+    context = {'order_groups': order_groups}
     return render(request, 'crud/order_list.html', context)
 
 
@@ -55,5 +60,8 @@ def order_form(request, order_uuid=0):
 
 
 def delete_order(request, order_uuid):
+    if not check_superuser(request):
+        return redirect('main')
+
     Order.delete_by_id(order_uuid)
     return redirect('admin-order-list')

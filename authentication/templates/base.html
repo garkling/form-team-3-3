@@ -1,5 +1,6 @@
 {% load static %}
 <!doctype html>
+<!--suppress ALL -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="{% static 'styles/my-css.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="{% static 'scripts/order_select.js' %}"></script>
     <script src="{% static 'scripts/timer.js' %}"></script>
@@ -31,7 +33,17 @@
               {% if request.user.is_authenticated %}
                 <li><a href="{% url 'user-orders' request.user.uuid %}">Orders</a></li>
                 {% if request.user.role %}
-                      <li><a href="{% url 'crud' %}">CRUD</a></li>
+                    <li>
+                        <div class="dropdwn">
+                            <a>CRUD</a>
+                            <div class="dropdown-cont">
+                                <a href="{% url 'admin-user-list' %}">Users</a>
+                                <a href="{% url 'admin-book-list' %}">Books</a>
+                                <a href="{% url 'admin-author-list' %}">Authors</a>
+                                <a href="{% url 'admin-order-list' %}">Orders</a>
+                            </div>
+                        </div>
+                    </li>
                 {% endif %}
                 <li>
                     <div class="dropdwn">
@@ -51,9 +63,9 @@
     </header>
     <main>
         {% block content %}
+
         {% endblock %}
     </main>
-    <div class="bottom-offset"></div>
     <footer class="page-footer blue lighten-2">
       <div class="container">
         <div class="row">

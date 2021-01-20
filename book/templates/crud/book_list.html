@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load split_text %}
 
 {% block title %}
     Book list
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container center-div">
         <h3 class="center-align">Books</h3>
         <div class="divider"></div>
         <table class="scrollable-table responsive-table">
@@ -31,8 +32,6 @@
                     </td>
                     <td>{{ book.id }}</td>
                     <td>{{ book.name }}</td>
-                    <td>{{ book.description }}</td>
-                    <td>{{ book.count }}</td>
                     <td>
                         <ul>
                             {% for author in book.authors.all %}
@@ -42,6 +41,14 @@
                             {% endfor %}
                         </ul>
                     </td>
+                    <td>
+                        <ul>
+                            {% for sentence in book.description|split_text %}
+                                <li>{{ sentence }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{ book.count }}</td>
                 </tr>
             {% endfor %}
         </table>

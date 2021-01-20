@@ -166,4 +166,4 @@ class Book(models.Model):
         returns data for json request with QuerySet of all books
         """
         all_users = Book.objects.all()
-        return list(all_users)
+        return all_users
