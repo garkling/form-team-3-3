@@ -6,7 +6,6 @@ from .models import Order
 from book.models import Book
 from authentication.views import check_superuser
 
-from tempus_dominus.widgets import DatePicker, TimePicker, DateTimePicker
 
 def all_orders(request, user_uuid):
     current_user = request.user
@@ -30,8 +29,6 @@ def end_order(request, order_id):
     return redirect('main')
 
 
-#/////////////////////////////////////////////
-# admin side
 def order_list(request):
     if not check_superuser(request):
         return redirect('main')

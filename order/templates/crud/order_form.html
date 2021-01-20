@@ -18,13 +18,11 @@
                     <label>Book:</label>
                 </div>
                 <div class="input-field col s6 offset-s3">
-                    {{ form.end_at }}
-                    <label>End at:</label>
-
+                    <input type="datetime-local" {{ form.end_at  }}
                 </div>
                 <div class="input-field col s6 offset-s3">
-                    {{ form.plated_end_at}}
-                    <label>Plated end at:</label>
+                    <input type="datetime-local" {{ form.plated_end_at}}
+
                 </div>
             </div>
             <div class="row">

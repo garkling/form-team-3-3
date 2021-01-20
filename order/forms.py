@@ -1,6 +1,8 @@
+from datetimepicker.widgets import DateTimePicker
 from django.forms import Form, ChoiceField
 from django import forms
 from .models import Order
+
 
 
 class FilterForm(Form):
@@ -22,7 +24,6 @@ class OrderCreationForm(forms.ModelForm):
         exclude = ['uuid']
 
         widgets = {
-            'end_at': forms.DateTimeInput(),
+            'nd_at': forms.DateTimeInput(),
             'plated_end_at': forms.DateTimeInput()
-
         }
