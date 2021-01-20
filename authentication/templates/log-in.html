@@ -5,23 +5,20 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post">
+    <form id="login-form" method="post">
         {% csrf_token %}
         <div class="row bottom-offset container">
             <div class="row">
                 <div class="input-field col s6 offset-s3">
                     {{ form.email }}
                     <label for="email">Email</label>
-                    {% for error in form.email.errors %}
-                        <p class="helper-text red-text"><strong>{{ error }}</strong></p>
-                    {% endfor %}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s6 offset-s3">
                     {{ form.password }}
                     <label for="password">Password</label>
-                    {% for error in form.password.errors %}
+                    {% for error in form.non_field_errors %}
                         <p class="helper-text red-text"><strong>{{ error }}</strong></p>
                     {% endfor %}
                 </div>
@@ -32,15 +29,11 @@
                     <button id="login-btn" type="submit" class="btn btn-large">Login</button>
                 </div>
             </div>
-            {% for error in form.errors %}
-                <p class="helper-text red-text"><strong>{{ error }}</strong></p>
-            {% endfor %}
         </div>
     </form>
-    {% if msg %}
+    {% if form.non_field_errors %}
         <script>
-            let msg = document.getElementById('login-msg').dataset.msg
-            M.toast ({html: msg,})
+            $('#login-form').clear()
         </script>
     {% endif %}
 {% endblock %}

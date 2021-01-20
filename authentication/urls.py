@@ -11,8 +11,6 @@ urlpatterns = [
     path('activation', views.change_status, name='activation'),
     path('logout', views.user_logout, name='log-out'),
 
-    path('crud', views.crud, name='crud'),
-
     path('crud/admin-user-list', views.user_list, name='admin-user-list'),
     path('crud/create-user', views.user_form, name='insert-user'),
     path('crud/update-user/<user_uuid>', views.user_form, name='update-user'),

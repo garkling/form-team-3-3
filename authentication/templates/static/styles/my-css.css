@@ -2,6 +2,11 @@ html {
     font-family: Montserrat, sans-serif;
 }
 
+main {
+    min-height: calc(100vh - 70px);
+}
+
+
 .brand-logo {
     left: 1rem !important;
 }
@@ -117,7 +122,7 @@ html {
 .dropdown-cont {
     display: none;
     position: absolute;
-    background-color: #c5cae9;
+    background-color: #79aec8;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }
@@ -150,3 +155,6 @@ html {
     margin: -10px 0 0 -100px;
 }
 
+footer {
+    margin-top: 100px;
+}

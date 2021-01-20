@@ -64,9 +64,9 @@ class Order(models.Model):
             return None
 
     @staticmethod
-    def get_by_id(order_id):
+    def get_by_id(order_uuid):
         try:
-            order = Order.objects.get(uuid=order_id)
+            order = Order.objects.get(uuid=order_uuid)
             return order
         except Order.DoesNotExist:
             pass
@@ -80,7 +80,7 @@ class Order(models.Model):
 
     @staticmethod
     def get_all():
-        all_order = list(Order.objects.all())
+        all_order = Order.objects.all()
         return all_order
 
     @staticmethod
@@ -94,15 +94,15 @@ class Order(models.Model):
         return orders
 
     @staticmethod
-    def delete_by_id(order_id):
+    def delete_by_id(order_uuid):
         """
-        :param order_id: an id of an order to be deleted
-        :type order_id: int
+        :param order_uuid: an id of an order to be deleted
+        :type order_uuid: int
         :return: True if object existed in the db and was removed or False if it didn't exist
         """
 
         try:
-            user = Order.objects.get(id=order_id)
+            user = Order.objects.get(uuid=order_uuid)
             user.delete()
             return True
         except Order.DoesNotExist:
