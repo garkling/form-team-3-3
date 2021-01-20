@@ -38,28 +38,28 @@ class Author(models.Model):
         return f'{self.__class__.__name__}(id={self.id})'
 
     @staticmethod
-    def get_by_id(author_id):
+    def get_by_id(author_uuid):
         """
-        :param author_id: SERIAL: the id of a Author to be found in the DB
+        :param author_uuid: SERIAL: the id of a Author to be found in the DB
         :return: author object or None if a user with such ID does not exist
         """
         try:
-            user = Author.objects.get(id=author_id)
+            user = Author.objects.get(uuid=author_uuid)
             return user
         except Author.DoesNotExist:
             pass
             # LOGGER.error("User does not exist")
 
     @staticmethod
-    def delete_by_id(author_id):
+    def delete_by_id(author_uuid):
         """
-        :param author_id: an id of a author to be deleted
-        :type author_id: int
+        :param author_uuid: an id of a author to be deleted
+        :type author_uuid: int
         :return: True if object existed in the db and was removed or False if it didn't exist
         """
 
         try:
-            author = Author.objects.get(id=author_id)
+            author = Author.objects.get(uuid=author_uuid)
             author.delete()
             return True
         except Author.DoesNotExist:
