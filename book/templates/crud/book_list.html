@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Book list
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3 class="center-align">Books</h3>
+        <div class="divider"></div>
+        <table class="scrollable-table responsive-table">
+            <tr>
+                <td class="fix-col">
+                    <a href="{% url 'insert-book' %}">
+                        <i class="dynamic-btn material-icons small green-text">add_circle</i>
+                    </a>
+                </td>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Count</th>
+                <th>Authors</th>
+            </tr>
+            {% for book in books|dictsort:'name' %}
+                <tr>
+                    <td>
+                        <div class="fix-col">
+                            <a href="{% url 'update-book' book.uuid %}"><i class="dynamic-btn material-icons small green-text">edit</i></a>
+                            <a href="{% url 'delete-book' book.uuid %}"><i class="dynamic-btn material-icons small red-text">delete</i></a>
+                        </div>
+                    </td>
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.name }}</td>
+                    <td>{{ book.description }}</td>
+                    <td>{{ book.count }}</td>
+                    <td>
+                        <ul>
+                            {% for author in book.authors.all %}
+                                <li>
+                                    {{ author.name }} {{ author.surname }} {{ author.patronymic }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

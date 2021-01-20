@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Book form
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+    {% csrf_token %}
+        <div class="row container bottom-offset">
+            <div id='register-fields' class="row">
+                 <div class="input-field col s6 offset-s3">
+                    {{ form.name }}
+                    <label>Name</label>
+                </div>
+                 <div class="input-field col s6 offset-s3">
+                    {{ form.description }}
+                    <label>Description</label>
+                </div>
+                 <div class="input-field col s6 offset-s3">
+                    {{ form.count }}
+                    <label>Count</label>
+                    {% for error in form.count.errors %}
+                        <p class="helper-text red-text"><strong>{{ error }}</strong></p>
+                    {% endfor %}
+                </div>
+                 <div class="input-field col s6 offset-s3">
+                    {{ form.authors }}
+                    <label>Authors</label>
+                    {% for error in form.authors.errors %}
+                        <p class="helper-text red-text"><strong>{{ error }}</strong></p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col s6 offset-s3">
+                    <a class="btn btn-block"
+                        onclick="this.closest('form').submit()">Submit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
