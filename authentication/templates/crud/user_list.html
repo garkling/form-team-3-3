@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load convert_date %}
+
+{% block title %}
+    Users
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3 class="center-align">Users</h3>
+        <div class="divider"></div>
+        <h4>Users</h4>
+        <table class="scrollable-table responsive-table">
+            <tr>
+                <td class="fix-col">
+                    <a href="{% url 'insert-user' %}">
+                        <i class="dynamic-btn material-icons small green-text">add_circle</i>
+                    </a>
+                </td>
+                <th>Id</th>
+                <th>Full name</th>
+                <th>Email</th>
+                <th>Active</th>
+                <th>Role</th>
+                <th>Last login</th>
+                <th>Created</th>
+                <th>Updated</th>
+            </tr>
+            {% for user in users|dictsort:'created_at' %}
+                {% convert_date user.last_login as last_login %}
+                {% convert_date user.created_at as created_at %}
+                {% convert_date user.updated_at as updated_at %}
+                <tr>
+                    <td>
+                        <div class="fix-col">
+                            <a href="{% url 'update-user' user.uuid %}"><i class="dynamic-btn material-icons small green-text">edit</i></a>
+                            {% if request.user.id != user.id %}
+                                <a href="{% url 'delete-user' user.uuid %}"><i class="dynamic-btn material-icons small red-text">delete</i></a>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.first_name }} {{ user.middle_name }} {{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.is_active }}</td>
+                    <td>{{ user.get_role_name }}</td>
+                    <td>{{ last_login|default:'—' }}</td>
+                    <td>{{ created_at }}</td>
+                    <td>{{ updated_at|default:'—' }}</td>
+
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

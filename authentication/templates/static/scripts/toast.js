@@ -8,4 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	submitButton.addEventListener('click', () => M.toast(options) )
 	returnButton.addEventListener('click', () => M.toast(options) )
+
+	// const loginErrorMsg = document.getElementById('sign-in-msg').dataset.msg
+	// const signInErrorMsg = document.getElementById('login-msg').dataset.msg
+	// if (loginErrorMsg) {
+	// 	M.toast({html: loginErrorMsg})
+	// }
+	// if (signInErrorMsg) {
+	// 	M.toast({html: signInErrorMsg})
+	// }
 })

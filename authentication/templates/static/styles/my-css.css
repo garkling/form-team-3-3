@@ -127,12 +127,26 @@ html {
 }
 
 .img-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .full-image {
     width: 100%;
 }
+
+.scrollable-table {
+    table-layout: fixed;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.fix-col {
+    position: absolute;
+    *position: relative;
+    margin: -10px 0 0 -100px;
+}
+

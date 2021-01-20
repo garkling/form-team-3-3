@@ -31,12 +31,22 @@
                     <div class="input-field col s6 offset-s3">
                         {{ form.email }}
                         <label for="email">Email</label>
+                        {% for error in form.email.errors %}
+                            <p class="helper-text red-text"><strong>{{ error }}</strong></p>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field col s6 offset-s3">
-                        {{ form.password }}
-                        <label for="password">Password</label>
+                        {{ form.password1 }}
+                        <label for="password1">Password</label>
+                    </div>
+                    <div class="input-field col s6 offset-s3">
+                        {{ form.password2 }}
+                        <label for="password2">Repeat password</label>
+                        {% for error in form.password2.errors %}
+                            <p class="helper-text red-text"><strong>{{ error }}</strong></p>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="row">
@@ -49,11 +59,8 @@
         </form>
         {% if failed %}
             <script>
-                M.toast(
-                  {
-                    html: 'You enter incorrect data. Try again',
-                  }
-                )
+                let msg = document.getElementById('sign-in-msg').dataset.msg
+                M.toast({html: msg,})
             </script>
         {% endif %}
     {% endif %}

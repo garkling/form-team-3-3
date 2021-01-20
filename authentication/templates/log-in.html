@@ -12,29 +12,35 @@
                 <div class="input-field col s6 offset-s3">
                     {{ form.email }}
                     <label for="email">Email</label>
+                    {% for error in form.email.errors %}
+                        <p class="helper-text red-text"><strong>{{ error }}</strong></p>
+                    {% endfor %}
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s6 offset-s3">
                     {{ form.password }}
                     <label for="password">Password</label>
+                    {% for error in form.password.errors %}
+                        <p class="helper-text red-text"><strong>{{ error }}</strong></p>
+                    {% endfor %}
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="login-msg" data-msg="{{ msg }}">
                 <div class="col s12 center">
                     <a href="{% url 'sign-in' %}" id='register-btn' type="button" class="btn btn-large btn-flat">Register</a>
                     <button id="login-btn" type="submit" class="btn btn-large">Login</button>
                 </div>
             </div>
+            {% for error in form.errors %}
+                <p class="helper-text red-text"><strong>{{ error }}</strong></p>
+            {% endfor %}
         </div>
     </form>
-    {% if failed %}
+    {% if msg %}
         <script>
-            M.toast(
-              {
-                html: 'You enter incorrect data. Try again',
-              }
-            )
+            let msg = document.getElementById('login-msg').dataset.msg
+            M.toast ({html: msg,})
         </script>
     {% endif %}
 {% endblock %}

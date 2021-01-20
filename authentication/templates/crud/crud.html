@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Create page
+{% endblock %}
+
+{% block content %}
+    <div class="container bottom-offset">
+        <ul>
+            <li><a href="{% url 'admin-user-list' %}">Users</a></li>
+            <li><a href="{% url 'admin-book-list' %}">Books</a></li>
+            <li><a href="{% url 'admin-author-list' %}">Authors</a></li>
+        </ul>
+    </div>
+{% endblock %}

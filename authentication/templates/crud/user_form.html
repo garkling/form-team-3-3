@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    User form
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="row container bottom-offset">
+            <div id='register-fields' class="row">
+                <div class="input-field col s2 offset-s3">
+                    {{ form.first_name}}
+                    <label>First name</label>
+                </div>
+                <div class="input-field col s2">
+                    {{ form.middle_name}}
+                    <label>Middle name</label>
+                </div>
+                <div class="input-field col s2">
+                    {{ form.last_name}}
+                    <label>Last name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 offset-s3">
+                    {{ form.email }}
+                    <label>Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 offset-s3">
+                    {{ form.password }}
+                    <label>Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s2 offset-s3">
+                    <label>
+                        {{ form.is_active }}
+                        <span>Is active</span>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s3 offset-s3">
+                    {{ form.role }}
+                    <label>Role</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6 offset-s3">
+                    <a class="btn btn-block"
+                        onclick="this.closest('form').submit()">Submit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
