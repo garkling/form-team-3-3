@@ -3,13 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
-from .forms import UserForm
+from .forms import CreationUserForm, UserLoginForm, AdminUserForm
 from .models import CustomUser
-
-
-def index(request):
-    context = {}
-    return render(request, 'index.html', context)
 
 
 @login_required
@@ -20,43 +15,40 @@ def user_logout(request):
 
 def register(request):
     registered = False
-    failed = False
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
+        form = CreationUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
             registered = True
             request.session['id_'] = user.id
-        else:
-            failed = True
+    else:
+        form = CreationUserForm()
 
-    user_form = UserForm()
     context = {
-        'form': user_form,
+        'form': form,
         'registered': registered,
-        'failed': failed
     }
     return render(request, 'sign-in.html', context)
 
 
 def log_in(request):
-    failed = False
     if request.method == 'POST':
-        email = request.POST['email']
-        password = request.POST['password']
-        candidate = authenticate(email=email, password=password)
-        if candidate:
-            login(request, candidate)
-            return redirect('main')
-        else:
-            failed = True
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            candidate = authenticate(email=email, password=password)
+            if candidate:
+                if not candidate.is_active:
+                    form.errors['is_active'] = 'Account is disabled'
+                else:
+                    login(request, candidate)
+                    return redirect('main')
+    else:
+        form = UserLoginForm()
 
-    user_form = UserForm()
     context = {
-        'form': user_form,
-        'failed': failed
+        'form': form,
     }
     return render(request, 'log-in.html', context)
 
@@ -72,3 +64,54 @@ def change_status(request):
         return redirect('log-in')
 
     return HttpResponse("User is not exists!")
+
+
+# admin side
+def check_superuser(request):
+    return request.user.role
+
+
+def crud(request):
+    if not check_superuser(request):
+        return redirect('main')
+
+    return render(request, 'crud/crud.html')
+
+
+# user CRUD
+def user_list(request):
+    if not check_superuser(request):
+        return redirect('main')
+
+    context = {'users': CustomUser.get_all()}
+    return render(request, 'crud/user_list.html', context)
+
+
+def user_form(request, user_uuid=0):
+    if not check_superuser(request):
+        return redirect('main')
+
+    user = CustomUser.get_by_id(user_uuid)
+    if request.method == 'POST':
+        user = CustomUser.get_by_id(user_uuid)
+        form = AdminUserForm(request.POST, instance=user)
+        if form.is_valid():
+            if user is None:
+                new_user = form.save()
+                new_user.set_password(new_user.password)
+                new_user.save()
+            else:
+                form.save()
+
+            return redirect('admin-user-list')
+    else:
+        form = AdminUserForm(instance=user)
+
+    context = {'form': form}
+    return render(request, 'crud/user_form.html', context)
+
+
+def delete_user(request, user_uuid):
+    CustomUser.delete_by_id(user_uuid)
+    return redirect('admin-user-list')
+

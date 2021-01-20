@@ -1,12 +1,14 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django import template
 from django.db import models, IntegrityError
 from django.db.utils import DataError
 
+import datetime
 import uuid
 
-
+register = template.Library()
 ROLE_CHOICES = (
     (0, 'visitor'),
     (1, 'admin'),
@@ -116,13 +118,13 @@ class CustomUser(AbstractBaseUser):
         return self.is_superuser
 
     @staticmethod
-    def get_by_id(user_id):
+    def get_by_id(user_uuid):
         """
-        :param user_id: SERIAL: the id of a user to be found in the DB
+        :param user_uuid: SERIAL: the id of a user to be found in the DB
         :return: user object or None if a user with such ID does not exist
         """
         try:
-            user = CustomUser.objects.get(id=user_id)
+            user = CustomUser.objects.get(uuid=user_uuid)
             return user
         except CustomUser.DoesNotExist:
             pass
@@ -144,15 +146,15 @@ class CustomUser(AbstractBaseUser):
             pass
 
     @staticmethod
-    def delete_by_id(user_id):
+    def delete_by_id(user_uuid):
         """
-        :param user_id: an id of a user to be deleted
-        :type user_id: int
+        :param user_uuid: an id of a user to be deleted
+        :type user_uuid: int
         :return: True if object existed in the db and was removed or False if it didn't exist
         """
 
         try:
-            user = CustomUser.objects.get(id=user_id)
+            user = CustomUser.objects.get(uuid=user_uuid)
             user.delete()
             return True
         except CustomUser.DoesNotExist:
