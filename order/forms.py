@@ -1,4 +1,6 @@
 from django.forms import Form, ChoiceField
+from django import forms
+from .models import Order
 
 
 class FilterForm(Form):
@@ -8,5 +10,19 @@ class FilterForm(Form):
         ('7', '1 week'),
         ('30', '1 month'),
     )
-
     select = ChoiceField(choices=OPTIONS)
+
+
+class OrderCreationForm(forms.ModelForm):
+    user = forms.ChoiceField(widget=forms.Select()),
+    book = forms.ChoiceField(widget=forms.Select()),
+
+    class Meta:
+        model = Order
+        exclude = ['uuid']
+
+        widgets = {
+            'end_at': forms.DateTimeInput(),
+            'plated_end_at': forms.DateTimeInput()
+
+        }

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Order list
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3 class="center-align">Order</h3>
+        <div class="divider"></div>
+        <table class="scrollable-table responsive-table">
+            <tr>
+                 <td class="fix-col">
+                    <a href="{% url 'insert-order' %}">
+                        <i class="dynamic-btn material-icons small green-text">add_circle</i>
+                    </a>
+                </td>
+                <th>Id</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Book</th>
+                <th>Created at</th>
+                <th>End at</th>
+                <th>Plated end at</th>
+            </tr>
+            {% for order in orders %}
+                <tr>
+                    <td>
+                        <div class="fix-col">
+                            <a href="{% url 'update-order' order.uuid %}"><i class="dynamic-btn material-icons small green-text">edit</i></a>
+                            <a href="{% url 'delete-order' order.id %}"><i class="dynamic-btn material-icons small red-text">delete</i></a>
+                        </div>
+                    </td>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.user.first_name }}</td>
+                    <td>{{ order.user.last_name }}</td>
+                    <td>{{ order.book.name }}</td>
+                    <td>{{ order.created_at }}</td>
+                    <td>{{ order.end_at }}</td>
+                    <td>{{ order.plated_end_at}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

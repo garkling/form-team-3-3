@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Order form
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="row container bottom-offset">
+            <div id='register-fields' class="row">
+                <div class="input-field col s6 offset-s3">
+                    {{ form.user }}
+                    <label>User:</label>
+                </div>
+                <div class="input-field col s6 offset-s3">
+                    {{ form.book }}
+                    <label>Book:</label>
+                </div>
+                <div class="input-field col s6 offset-s3">
+                    {{ form.end_at }}
+                    <label>End at:</label>
+
+                </div>
+                <div class="input-field col s6 offset-s3">
+                    {{ form.plated_end_at}}
+                    <label>Plated end at:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6 offset-s3">
+                    <a class="btn btn-block"
+                        onclick="this.closest('form').submit()">Submit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
