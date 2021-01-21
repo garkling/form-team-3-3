@@ -42,8 +42,6 @@ INSTALLED_APPS = [
     'author',
     'book',
     'order',
-    'widget_tweaks',
-
 ]
 
 MIDDLEWARE = [
