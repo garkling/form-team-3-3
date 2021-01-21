@@ -11,7 +11,7 @@ class Order(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    end_at = models.DateTimeField(null=True)
+    end_at = models.DateTimeField(null=True, default=None)
     plated_end_at = models.DateTimeField()
 
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
@@ -102,8 +102,8 @@ class Order(models.Model):
         """
 
         try:
-            user = Order.objects.get(uuid=order_uuid)
-            user.delete()
+            order = Order.objects.get(uuid=order_uuid)
+            order.delete()
             return True
         except Order.DoesNotExist:
             # LOGGER.error("User does not exist")

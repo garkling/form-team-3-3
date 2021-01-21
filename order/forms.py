@@ -1,4 +1,3 @@
-from django.forms import Form, ChoiceField
 from django import forms
 
 from .models import Order
@@ -6,14 +5,14 @@ from authentication.models import CustomUser
 from book.models import Book
 
 
-class FilterForm(Form):
+class FilterForm(forms.Form):
     OPTIONS = (
         ('3', '3 days'),
         ('5', '5 days'),
         ('7', '1 week'),
         ('30', '1 month'),
     )
-    select = ChoiceField(choices=OPTIONS)
+    select = forms.ChoiceField(choices=OPTIONS)
 
 
 class CustomUserSelectForm(forms.ModelChoiceField):
@@ -41,11 +40,19 @@ class OrderCreationForm(forms.ModelForm):
         widget=forms.Select()
     )
 
+    end_at = forms.DateTimeField(
+        required=False,
+        widget=forms.DateTimeInput(attrs={
+            'type': 'datetime-local'
+        })
+    )
+
     class Meta:
         model = Order
         exclude = ['uuid', 'created_at']
 
         widgets = {
-            'end_at': forms.DateTimeInput(),
-            'plated_end_at': forms.DateTimeInput()
+            'plated_end_at': forms.DateTimeInput(attrs={
+                'type': 'datetime-local',
+            })
         }

@@ -19,12 +19,9 @@
                 </div>
                 <div class="input-field col s6 offset-s3">
                     {{ form.end_at }}
-                    <label>End at</label>
-
                 </div>
                 <div class="input-field col s6 offset-s3">
                     {{ form.plated_end_at}}
-                    <label>Plated end at</label>
                 </div>
             </div>
             <div class="row">
@@ -34,6 +31,9 @@
                     </a>
                 </div>
             </div>
+            {% for error in form.end_at.errors %}
+                <p><strong>{{ error }}</strong></p>
+            {% endfor %}
         </div>
     </form>
 {% endblock %}

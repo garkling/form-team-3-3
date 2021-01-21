@@ -47,6 +47,10 @@ main {
     transform: scale(1.2);
 }
 
+.card-content {
+    min-height: 130px!important;
+}
+
 .column {
     float: left;
     width: 20%;

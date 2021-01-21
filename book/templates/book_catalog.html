@@ -23,7 +23,11 @@
                         {% for author in book.authors.all %}
                           <h6><strong>{{ author.name }} {{ author.surname }}</strong></h6>
                         {% endfor %}
-                      <p>{{ book.description }}</p>
+                        {% if book.description|length > 50 %}
+                            <p>{{ book.description|truncatechars:"50" }}</p>
+                        {% else %}
+                            <p>{{ book.description }}</p>
+                        {% endif %}
                     </div>
                     <div class="card-action">
                       <a href="{% url 'book-page' book.uuid %}" class='blue-text darken-2 'type="button">More</a>

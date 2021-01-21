@@ -30,8 +30,8 @@
                         <tr>
                             <td>
                                 <div class="fix-col">
-                                    <a href="{% url 'update-order' user.uuid %}"><i class="dynamic-btn material-icons small green-text">edit</i></a>
-                                    <a href="{% url 'delete-order' user.uuid %}"><i class="dynamic-btn material-icons small red-text">delete</i></a>
+                                    <a href="{% url 'update-order' order.uuid %}"><i class="dynamic-btn material-icons small green-text">edit</i></a>
+                                    <a href="{% url 'delete-order' order.uuid %}"><i class="dynamic-btn material-icons small red-text">delete</i></a>
                                 </div>
                             </td>
                             <td>{{ order.id }}</td>
